@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form>
+        <textarea id="income">
+
+        </textarea>
+        <input id="select_content">
+    </form>
+    <button id="submit"></button>
+    <div id="result"></div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#submit').click(function () {
+          let srcString = $('#income').val();
+          let rules_src = $('#select_content').val();
+          let rules = new RegExp(rules_src , "g");
+          console.log(rules);
+          let matchArray;
+          let resultString = "<pre>";
+          let begin = 0;
+          let end = 0;
+
+          while((matchArray = rules.exec(srcString)) != null){
+              console.log(1);
+              end = matchArray.index;
+              resultString += srcString.substring(begin , end);
+              resultString += "<span class='found'>" + matchArray[0] + "</span>";
+              begin = rules.lastIndex;
+          }
+
+          resultString += srcString.substring(begin , end);
+          resultString += "</pre>";
+
+          $('#result').innerHTML = resultString;
+        })
+    })
+</script>
+</html>
