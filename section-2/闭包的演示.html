@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+    <script>
+        let fade = function (node) {
+            let level = 1;
+            let step = function () {
+                let hex = level.toString(16);
+                node.style.backgroundColor = '#FFFF' + hex + hex;
+                if(level < 15){
+                    level += 1;
+                    setTimeout(step , 100);
+                }
+            };
+            setTimeout(step , 100);
+        };
+        fade(document.body);
+    </script>
+</html>
