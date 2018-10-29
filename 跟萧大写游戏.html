@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title> game 1 </title>
+  <style>
+    canvas {
+      border: 1px black solid;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="id-canvas" width="400" height="300">
+</body>
+
+<script>
+  let imgFromPath = function(path) {
+    let img = new Image();
+    img.src = path;
+    return img;
+  }
+
+  let Paddle = function() {
+    let image = imgFromPath('/home/gaoshuda/文档/lesson1/homeworkWeboureda/html5demos/images/learn-js.jpg');
+    var o = {
+      img: image,
+      x: 100,
+      y: 100,
+      speed : 5
+    }
+    o.moveLeft = function(){
+      x -= speed;
+    }
+
+    o.moveRight = function(){
+      x += speed;
+    }
+    return o;
+  }
+
+  let guagame = function(){
+    var g = {}
+    var canvas = document.querySelector('#id-canvas');
+    var content = canvas.getContext('2d');
+    
+    setInterval(function() {
+      if (leftDown) {
+        paddle.moveLeft();
+      }
+      if (rightDown) {
+        paddle.moveRight();
+      }
+      content.clearRect(0, 0, canvas.width, canvas.height);
+      content.drawImage(paddle.img, paddle.x, paddle.y);
+
+    }, 1000 / 15)
+  }
+
+  let __main = function(){
+    var paddle =  Paddle();
+    var log = console.log.bind(console);
+    var game = guagame();
+
+    var leftDown = false;
+    var rightDown = false;
+    window.addEventListener('keydown', function(event) {
+      let key = event.key;
+      if (key == "a") {
+        leftDown = true;
+      } else if (key == "d") {
+        rightDown = true;
+      }
+    })
+    window.addEventListener('keyup', function(event) {
+      let key = event.key;
+      if (key == "a") {
+        leftDown = false;
+      } else if (key == "d") {
+        rightDown = false;
+      }
+    })
+
+  }
+  __main();
+</script>
+
+</html>
