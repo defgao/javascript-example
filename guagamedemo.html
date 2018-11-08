@@ -104,7 +104,7 @@ var Block = function() {
         o.alive = false
     }
     o.collide = function(b) {
-        return rectIntersects( o , b ) || rectIntersects( b , o )
+        return ( rectIntersects( o , b ) || rectIntersects( b , o ) ) && o.alive
     }
     return o
 }
@@ -162,8 +162,12 @@ var __main = function() {
 
     var paddle = Paddle()
     var ball = Ball()
-    var block = Block()
+    var blocks = []
 
+    for(var i = 0 ; i < 3 ; i++){
+        blocks[i] = Block();
+        blocks[i].x = i * 100;
+    }
     game.registerAction('a', function(){
         paddle.moveLeft()
     })
@@ -181,10 +185,13 @@ var __main = function() {
             // 这里应该 调用一个 ball.反弹() 来实现
             ball.speedY *= -1
         }
-        if (block.collide(ball)){
-            log('block 相撞');
-            block.kill();
-            ball.re();
+        for(var element of blocks) {
+
+            if (element.collide(ball)){
+                log('block 相撞');
+                element.kill();
+                ball.re();
+            }
         }
     }
     game.draw = function() {
@@ -192,8 +199,10 @@ var __main = function() {
         game.drawImage(paddle)
         game.drawImage(ball)
         //draw block if it is alive draw it
-        if(block.alive) {
-            game.drawImage(block)
+        for(var element of blocks) {
+            if (element.alive) {
+                game.drawImage(element)
+            }
         }
     }
 }
