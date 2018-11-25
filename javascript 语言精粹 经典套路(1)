@@ -24,4 +24,24 @@ myObject.double = function(){
 myObject.double();
  // ----------------------------------------------------------------------------------------
  
- 
+     let createDiv = function (html) {
+        this.html = html;
+        this.init();
+    };
+    createDiv.prototype.init = function () {
+        let div = document.createElement('div');
+        div.innerHTML = this.html;
+        document.body.appendChild(div);
+    };
+    let ProxySingletonCratediv = (function () {
+        let instance; //设置一个标识位
+        return function (html) {
+            if(!instance){
+                instance = new createDiv(html);
+            }
+            return instance;
+        }
+    })();
+    let a = new ProxySingletonCratediv('sven1');
+    let b = new ProxySingletonCratediv('sven2');
+    alert(a === b);
